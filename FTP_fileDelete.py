@@ -8,3 +8,4 @@ def fileDelete(filename, SERVER, USERNAME, PASSWORD):
     ftp.delete(filename)
     ftp.retrlines('LIST')
     ftp.quit()
+    
