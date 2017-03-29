@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 from ftplib import FTP
 
-def fileDelete():
+def fileDelete(filename):
     ftp = FTP("SERVER")
     ftp.login("USERNAME", "PASSWORD")
     ftp.cwd('/data/')
     #ftp.retrlines('LIST')
-    ftp.delete("test.txt")
+    ftp.delete("filename")
     ftp.quit()
 
-fileDelete()
+fileDelete(filename)
