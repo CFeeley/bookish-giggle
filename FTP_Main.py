@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-import FTP_fileUpload
-import FTP_fileDelete
+import FTP_Library
 import os
 
 
@@ -20,24 +19,94 @@ def getserver_password():
     return PASSWORD
 
 def getfile_upload():
-    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    while True:
+        try:
+            fileDir = os.path.dirname(os.path.realpath('__file__'))
+            file_location = int(input('Where is the file located? If in current folder answer 1, if it is in a folder within the current folder answer 2, if it is in the parent folder of the current folder answer 3, if it is in a sibling folder answer 4.'))
+            # For accessing the file in the same folder
+            if file_location == 1:
+                while True:
+                    try:
+                        chosen_file = input('What is the name of the file you want to upload')
+                        f = open(chosen_file, 'rb')
+                    except IOError:
+                        print('Could not locate file. Please type the full file name.')
+                        continue
+                    else:
+                        f.close()
+                        break
+                return chosen_file
+            # For accessing the file in a folder contained in the current folder
+            elif file_location == 2:
+                while True:
+                    try:
+                        folder_name = input('What is the exact name of the folder')
+                        chosen_file = input('What is the name of the file you want to upload')
+                        chosen_file = os.path.join(fileDir, ('%s/' % folder_name) + chosen_file)
+                        f = open(chosen_file, 'rb')
+                    except IOError:
+                        print('Could not locate file. Please type the full folder name and file name.')
+                        continue
+                    else:
+                        f.close()
+                        break
+                return chosen_file
+            # For accessing the file in the parent folder of the current folder
+            elif file_location == 3:
+                while True:
+                    try:
+                        chosen_file = input('What is the name of the file you want to upload')
+                        chosen_file = os.path.join(fileDir, '../' + chosen_file)
+                        f = open(chosen_file, 'rb')
+                    except IOError:
+                        print('Could not locate file. Please type the full folder name and file name.')
+                        continue
+                    else:
+                        f.close()
+                        break
+                return chosen_file
+            # For accessing the file inside a sibling folder.
+            elif file_location == 4:
+                while True:
+                    try:
+                        sibling_foldername = input('What is the exact sibling folders name?')
+                        chosen_file = input('What is the name of the file you want to upload')
+                        chosen_file = os.path.join(fileDir, ('../%s/' % sibling_foldername) + chosen_file)
+                        chosen_file = os.path.abspath(os.path.realpath(chosen_file))
+                        f = open(chosen_file, 'rb')
+                    except IOError:
+                        print('Could not locate file. Please type the full folder name and file name.')
+                        continue
+                    else:
+                        f.close()
+                        break
+                return chosen_file
+            elif file_location > 4:
+                print("Incorrect value entered.")
+                quit()
+            elif file_location < 1:
+                print("Incorrect value entered.")
+                quit()
+            else:
+                print('Could not locate file. Please type the full folder name and file name.')
+        except ValueError:
+            print('I dont understand that.')
+        else:
+            break
 
-    # For accessing the file in the same folder
-    filename = "test.txt"
 
-    # For accessing the file in a folder contained in the current folder
-    # filename = os.path.join(fileDir, 'test_folder/test.txt')
 
-    # For accessing the file in the parent folder of the current folder
-    # filename = os.path.join(fileDir, '../same.txt')
-    # readFile(filename)
-
-    # For accessing the file inside a sibling folder.
-    # filename = os.path.join(fileDir, '../sibling_test_folder/test.txt')
-    # filename = os.path.abspath(os.path.realpath(filename))
-    
+def getfile_pull():
+    filename = input('What is the full file name you want to pull?')
     return filename
 
+def getfile_delete():
+    filename = input('What is the file you want to delete named?')
+    return filename
 
-FTP_fileUpload.fileUpload(getfile_upload(), getserver_address(), getserver_username(), getserver_password())
-FTP_fileDelete.fileDelete(getfile_upload(), getserver_address(), getserver_username(), getserver_password())
+def main():
+        FTP_Library.fileUpload(getfile_upload(), getserver_address(), getserver_username(), getserver_password())
+        # FTP_Library.fileDelete(getfile_delete(), getserver_address(), getserver_username(), getserver_password())
+        FTP_Library.filePull(getfile_pull(), getserver_address(), getserver_username(), getserver_password())
+
+main()
