@@ -22,9 +22,9 @@ def getfile_upload():
     while True:
         try:
             fileDir = os.path.dirname(os.path.realpath('__file__'))
-            file_location = input('Where is the file located? If in current folder answer 1, if it is in a folder within the current folder answer 2, if it is in the parent folder of the current folder answer 3, if it is in a sibling folder answer 4.')
+            file_location = int(input('Where is the file located? If in current folder answer 1, if it is in a folder within the current folder answer 2, if it is in the parent folder of the current folder answer 3, if it is in a sibling folder answer 4.'))
             # For accessing the file in the same folder
-            if file_location == '1':
+            if file_location == 1:
                 while True:
                     try:
                         chosen_file = input('What is the name of the file you want to upload')
@@ -37,7 +37,7 @@ def getfile_upload():
                         break
                 return chosen_file
             # For accessing the file in a folder contained in the current folder
-            elif file_location == '2':
+            elif file_location == 2:
                 while True:
                     try:
                         folder_name = input('What is the exact name of the folder')
@@ -52,7 +52,7 @@ def getfile_upload():
                         break
                 return chosen_file
             # For accessing the file in the parent folder of the current folder
-            elif file_location == '3':
+            elif file_location == 3:
                 while True:
                     try:
                         chosen_file = input('What is the name of the file you want to upload')
@@ -66,7 +66,7 @@ def getfile_upload():
                         break
                 return chosen_file
             # For accessing the file inside a sibling folder.
-            elif file_location == '4':
+            elif file_location == 4:
                 while True:
                     try:
                         sibling_foldername = input('What is the exact sibling folders name?')
@@ -81,10 +81,17 @@ def getfile_upload():
                         f.close()
                         break
                 return chosen_file
+            elif file_location > 4:
+                print("Incorrect value entered.")
+                quit()
+            elif file_location < 1:
+                print("Incorrect value entered.")
+                quit()
             else:
                 print('Could not locate file. Please type the full folder name and file name.')
-                continue
-        finally:
+        except ValueError:
+            print('I dont understand that.')
+        else:
             break
 
 
@@ -98,8 +105,8 @@ def getfile_delete():
     return filename
 
 def main():
-        #FTP_Library.fileUpload(getfile_upload(), getserver_address(), getserver_username(), getserver_password())
-        #FTP_Library.fileDelete(getfile_delete(), getserver_address(), getserver_username(), getserver_password())
+        FTP_Library.fileUpload(getfile_upload(), getserver_address(), getserver_username(), getserver_password())
+        # FTP_Library.fileDelete(getfile_delete(), getserver_address(), getserver_username(), getserver_password())
         FTP_Library.filePull(getfile_pull(), getserver_address(), getserver_username(), getserver_password())
 
 main()
