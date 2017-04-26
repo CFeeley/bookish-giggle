@@ -28,7 +28,7 @@ def getfile_upload():
                 while True:
                     try:
                         chosen_file = input('What is the name of the file you want to upload')
-                        f = open(chosen_file, 'rb')
+                        f = open(chosen_file, 'r')
                     except IOError:
                         print('Could not locate file. Please type the full file name.')
                         continue
@@ -43,7 +43,7 @@ def getfile_upload():
                         folder_name = input('What is the exact name of the folder')
                         chosen_file = input('What is the name of the file you want to upload')
                         chosen_file = os.path.join(fileDir, ('%s/' % folder_name) + chosen_file)
-                        f = open(chosen_file, 'rb')
+                        f = open(chosen_file, 'r')
                     except IOError:
                         print('Could not locate file. Please type the full folder name and file name.')
                         continue
@@ -57,7 +57,7 @@ def getfile_upload():
                     try:
                         chosen_file = input('What is the name of the file you want to upload')
                         chosen_file = os.path.join(fileDir, '../' + chosen_file)
-                        f = open(chosen_file, 'rb')
+                        f = open(chosen_file, 'r')
                     except IOError:
                         print('Could not locate file. Please type the full folder name and file name.')
                         continue
@@ -73,7 +73,7 @@ def getfile_upload():
                         chosen_file = input('What is the name of the file you want to upload')
                         chosen_file = os.path.join(fileDir, ('../%s/' % sibling_foldername) + chosen_file)
                         chosen_file = os.path.abspath(os.path.realpath(chosen_file))
-                        f = open(chosen_file, 'rb')
+                        f = open(chosen_file, 'r')
                     except IOError:
                         print('Could not locate file. Please type the full folder name and file name.')
                         continue

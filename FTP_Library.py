@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 from ftplib import FTP
 
 def fileUpload(filename, SERVER, USERNAME, PASSWORD):
@@ -19,7 +18,7 @@ def fileUpload(filename, SERVER, USERNAME, PASSWORD):
         else:
             break
     # opening file to upload
-    with open(filename, 'rb')as f:
+    with open(filename, 'r')as f:
     # storlines stores the file
         ftp.storlines('STOR %s' % filename, f)
     # shows contents in current directory
