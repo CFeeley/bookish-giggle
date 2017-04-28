@@ -2,7 +2,7 @@ import BME280_read as BME
 import time
 
 def now():
-    the_time=int(time.time()*1000)
+    the_time=int((time.time()-18000)*1000)
     return the_time
 
 def temp_read():
